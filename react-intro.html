@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>React tutorial</title>
+</head>
+
+<body>
+    <div class="" id="app"></div>
+
+    <script type="text/babel">
+        class App extends React.Component {
+
+            state = {
+                name: "Tudor",
+                age: 30
+            }
+
+            // arrow functions should be used here so that "this" keyword binds to the the class instance
+            handleClick = e => {
+                console.log(`Name is: ${this.state.name}`)
+                // Using this.state.name = [changed name] is bad practice 
+                // Using .setState() method is the correct approach. 
+                this.setState ({ 
+                    name: "Tudor Popescu",
+                    age: 25
+                })
+            }
+
+            handleMouseOver = e => {
+                console.log(e.target, e.pageY)
+            }
+
+            handleCopy = e => {
+                console.log("don't copy this!")
+            }
+
+            handleChange = e => {
+                this.setState({
+                    name: e.target.value
+                })
+            }
+
+            handleSubmit = e => {
+                e.preventDefault()
+                console.log("form submitted", this.state.name)
+            }
+            render() {
+                return ( 
+                    //you can only have one main element in the return() function
+                <div className="app-content"> 
+                    <h1> Hey There </h1>
+                    <p>My name is {this.state.name} and I am {this.state.age}</p> 
+                    <button onClick={this.handleClick}>Click me</button>
+                    <button onMouseOver={this.handleMouseOver}>Hover me</button>
+                    <p onCopy={this.handleCopy}> Copy me (?) </p>
+
+                    {/*Comments are handled like this*/}
+                    
+                    {/*Forms*/}
+                    <form onSubmit={this.handleSubmit}>
+                        <input type="text" onChange={this.handleChange}/> 
+                        <button>Submit</button>
+                    </form>
+                    {/*
+                        the handleChange() function will change the state as the value in the input box is changed. 
+                        This happens as the user types.
+                    */}
+
+                </div> 
+                ) // curly braces are required for dynamic data
+
+
+            }
+
+        }
+
+        // this needs to be called, otherwise the code won't work
+        // first argument is the name of the class in </>, and the second is the div on the HTML you want filled 
+        ReactDOM.render(<App/>, document.getElementById("app")) 
+
+    </script>
+
+</body>
+
+</html>
